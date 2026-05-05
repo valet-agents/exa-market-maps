@@ -7,6 +7,9 @@ description: >-
   news — then posts a previewed map back in-thread.
 category: research
 
+example:
+  prompt: "Map the AI infra space for me."
+
 story:
   hero: "Type a thesis, get back a living market map."
   subheadline: >-
