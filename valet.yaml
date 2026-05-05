@@ -1,0 +1,71 @@
+name: exa-market-maps
+display_name: Exa Market Maps
+description: >-
+  Turns an investor's thesis into a structured, refreshable
+  market map. @mention it in Slack with a space to map and it
+  builds an Exa Webset — companies, founders, funding, recent
+  news — then posts a previewed map back in-thread.
+category: research
+
+story:
+  hero: "Type a thesis, get back a living market map."
+  subheadline: >-
+    Describe the space — it builds the company list, founders,
+    funding, and recent news, and keeps it fresh as the market
+    moves.
+  steps:
+    - role: trigger
+      title: "An investor types a thesis in Slack."
+      body: >-
+        @mention the agent with a space to map — *"map AI infra"*,
+        *"Series-A SaaS in legal tech"*. No form to fill.
+      catalog: slack
+    - role: action
+      title: "Exa builds a structured market map."
+      body: >-
+        Creates a webset with enrichments for founder, funding
+        stage, headcount, geo, and recent news, then searches.
+      catalog: exa-websets-mcp
+    - role: outcome
+      title: "A previewed, refreshable webset, posted in-thread."
+      body: >-
+        First 10 hits as a preview, plus the full webset URL.
+        @mention again to refresh, enrich, or ask follow-ups.
+      catalog: slack
+
+connectors:
+  - catalog: exa-websets-mcp
+    description: >-
+      The Exa Websets MCP server. The agent uses it to create
+      named websets for each thesis, define enrichments
+      (founder, funding stage, headcount, geo, recent news),
+      run searches, and refresh existing maps on follow-up
+      mentions.
+    slot_descriptions:
+      EXA_API_KEY: >-
+        Your Exa API key. Create one at dashboard.exa.ai under
+        API Keys — needs Websets access. Paste it here; it's
+        stored as a secret and only injected into the MCP
+        server URL.
+    ui:
+      headline: "Connect Exa Websets."
+      blurb: >-
+        Paste your Exa API key from dashboard.exa.ai. The agent
+        uses it to build and refresh structured market maps for
+        every thesis you send in Slack.
+      done_note: "Exa connected"
+
+channels:
+  - catalog: slack
+    description: >-
+      The agent gets its own Slack bot. Invite it to whichever
+      channels you want to be able to @mention it from for
+      market-map requests and follow-ups. All replies stay in
+      the originating thread.
+    ui:
+      headline: "Give Market Maps a Slack bot."
+      blurb: >-
+        Invite the bot to your deal-flow, research, or
+        investing channel and @mention it with a thesis to
+        kick off a map. Replies stay in-thread.
+      done_note: "Bot ready — invite it to a channel"
